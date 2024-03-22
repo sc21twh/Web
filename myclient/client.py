@@ -11,7 +11,9 @@ def login(url):
         return None
     #Prompts user for login details
     username = input("Enter username: ")
+    print()
     password = input("Enter password: ")
+    print()
 
     #Sends post request with login credentials
     response = session.post(url+'/api/login', json={"username": username, "password": password})
