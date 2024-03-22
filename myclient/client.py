@@ -40,7 +40,8 @@ def logout(session, url):
     # Set headers to include session cookies and CSRF token
     headers = {
         'Cookie': '; '.join([f'{name}={value}' for name, value in session.cookies.items()]),
-        'X-CSRFToken': csrf_token  # Include CSRF token in the headers
+        'X-CSRFToken': csrf_token,
+        'Referer': url 
     }
 
     #Sends post request to logout
@@ -69,7 +70,7 @@ def postStory(session ,url):
     # Set headers to include session cookies and CSRF token
     headers = {
         'Cookie': '; '.join([f'{name}={value}' for name, value in session.cookies.items()]),
-        'X-CSRFToken': csrf_token,  # Include CSRF token in the headers
+        'X-CSRFToken': csrf_token, 
         'Referer': url
     }
 
@@ -151,6 +152,7 @@ def getStory(commands,url):
     if response.status_code == 200:
         stories = json.loads(response.text)
         for story in stories['stories']:
+            print()
             print("Key:", story['key'])
             print("Headline:", story['headline'])
             print("Category:", story['category'])
@@ -175,7 +177,8 @@ def deleteStory(commands, session, url):
     # Set headers to include session cookies and CSRF token
     headers = {
         'Cookie': '; '.join([f'{name}={value}' for name, value in session.cookies.items()]),
-        'X-CSRFToken': csrf_token  # Include CSRF token in the headers
+        'X-CSRFToken': csrf_token,
+        'Referer': url 
     }
 
     #Casts key and checks for integer
