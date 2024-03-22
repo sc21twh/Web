@@ -19,19 +19,23 @@ def login(url):
     #Outputs result to client, returns session if authenticated
     if response.status_code == 200:
         print(response.text)
+        print()
         return session
     else:
         print(response.text)
+        print()
         return None
     
 def logout(session, url):
+    if session is None:
+        print("You must be logged in to log out")
+        print()
+        return
+    
     #Checks for url
     if url is None:
         print("No URL provided")
-        return
-    
-    if session is None:
-        print("You must be logged in to log out")
+        print()
         return
     
     # Obtain CSRF token from cookies
@@ -50,19 +54,23 @@ def logout(session, url):
     #Outputs results to client
     if response.status_code == 200:
         print(response.text)
+        print()
     else:
         print(response.text)
+        print()
 
 def postStory(session ,url):
-    #Checks for url
-    if url is None:
-        print("No URL provided")
-        return  
-    
     # Checks for logged in user
     if session is None:
         print("You must be logged in to post a story")
+        print()
         return
+    
+    #Checks for url
+    if url is None:
+        print("No URL provided")
+        print()
+        return  
     
     # Obtain CSRF token from cookies
     csrf_token = session.cookies['csrftoken']
@@ -77,24 +85,32 @@ def postStory(session ,url):
     #Prompts user for the story elements
 
     headline = input("Enter headline: ")
+    print()
     category = input("Enter category: ")
+    print()
     region = input("Enter region: ")    
+    print()
     details = input("Enter details: ")  
+    print()
 
     if len(headline) > 64:
         print("Headline too long")
+        print()
         return
     
     if category not in ['pol', 'art', 'tech', 'trivia']:
         print("Invalid category")
+        print()
         return
     
     if region not in ['uk', 'eu', 'w']:
         print("Invalid region")
+        print()
         return
     
     if len(details) > 128:
         print("Details too long")
+        print()
         return
 
     #Sends post request to server
@@ -103,8 +119,10 @@ def postStory(session ,url):
     #Checks for response result
     if response.status_code == 200:
         print(response.text)
+        print()
     else:
         print(response.text)
+        print()
 
 
 def getStory(commands,url):
@@ -129,20 +147,24 @@ def getStory(commands,url):
                     region = value
                 else:
                     print("Invalid region")
+                    print()
                     return
             elif key == '-cat':
                 if value in ['pol', 'art', 'tech', 'trivia']:
                     category = value
                 else:
                     print("Invalid category")
+                    print()
                     return
             elif key == '-date':
                 storyDate = value
             else:
                 print("Invalid criteria")
+                print()
                 return
         else:
             print("Invalid criteria")
+            print()
             return
         
     #Sends get request for stories using criteria
@@ -169,6 +191,7 @@ def deleteStory(commands, session, url):
     #Checks for session
     if session is None:
         print("You must be logged in to delete a story")
+        print()
         return
     
     # Obtain CSRF token from cookies
@@ -186,14 +209,17 @@ def deleteStory(commands, session, url):
 
     if isinstance(key, int) == False:
         print("Key not an integer")
+        print()
         return
     
     #Sends delete request to server
     response = session.delete(url + '/api/stories/'+str(key), headers=headers)
     if response.status_code == 200:
         print(response.text)
+        print()
     else:
         print(response.text)
+        print()
 
 def main():
     #Initialises variables for loop
@@ -205,6 +231,7 @@ def main():
     while running:
         #Splits command into parts
         command = input("Enter command: ")
+        print()
         commands = command.split(' ')
 
         #Checks first word for valid command
@@ -213,7 +240,6 @@ def main():
             url = commands[1]
             session = login(url)
         
-
         elif first == 'logout':
             logout(session,url)
             session = None
@@ -232,6 +258,7 @@ def main():
         
         else:
             print("Invalid Command - Try Again")
+            print()
 
 main()
 

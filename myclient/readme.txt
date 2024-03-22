@@ -10,3 +10,7 @@ delete key - delete story with id=key function
 exit - exits the loop and ends program execution
 
 The loop will continue running until you type 'exit' and this ends execution
+
+An example for my python anywhere login would be login https://sc21twh.pythonanywhere.com
+Here you will be prompted for a username and password which I have set as
+Username - 'ammar' , password - 'instructor'
