@@ -6,7 +6,7 @@ session = requests.Session()
 
 def login(url):
     #Url check
-    if url != 'http://127.0.0.1:8000' and url != 'http://localhost:8000' and url != 'sc21twh@pythonanywhere.com':
+    if url != 'http://127.0.0.1:8000' and url != 'http://localhost:8000' and url != 'https://sc21twh.pythonanywhere.com':
         print("Invalid URL")
         return None
     #Prompts user for login details
@@ -69,7 +69,8 @@ def postStory(session ,url):
     # Set headers to include session cookies and CSRF token
     headers = {
         'Cookie': '; '.join([f'{name}={value}' for name, value in session.cookies.items()]),
-        'X-CSRFToken': csrf_token  # Include CSRF token in the headers
+        'X-CSRFToken': csrf_token,  # Include CSRF token in the headers
+        'Referer': url
     }
 
     #Prompts user for the story elements
@@ -108,7 +109,7 @@ def postStory(session ,url):
 def getStory(commands,url):
     #Sets url as login not needed
     if url is None:
-        url = 'http://127.0.0.1:8000'
+        url = 'https://sc21twh.pythonanywhere.com'
     
     #Checks commands
     region = '*'

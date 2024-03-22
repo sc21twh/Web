@@ -140,3 +140,5 @@ REST_FRAMEWORK = {
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
 SESSION_COOKIE_SECURE = True
+
+CSRF_TRUSTED_ORIGINS = ['sc21twh.pythonanywhere.com']
